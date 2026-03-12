@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+body[data-theme="light"] {
+  background: #fff;
+  color: #111;
+}
+
+body[data-theme="dark"] {
+  background: #111;
+  color: #fff;
+}
