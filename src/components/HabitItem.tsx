@@ -6,13 +6,20 @@ import { capitalize } from '../utils/capitalize'
 
 interface IHabitItem {
 	habit: HabitType
+	countCompletedDays: (id: number) => void
 }
 
-export default function HabitItem({habit}: IHabitItem) {
+export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 
 	 const {theme} = useContext(ThemeContext)
 
 	 const [completed, setCompleted] = useState<boolean>(false)
+
+	 const completedToday = () => {
+
+			setCompleted(true)
+			countCompletedDays(habit.id)
+	 }
 
 	return (
 		<div className='border mb-5 p-5'>
@@ -29,21 +36,24 @@ export default function HabitItem({habit}: IHabitItem) {
 			<p
 				className='mb-3'
 			>
-				Completed days: {habit.completedDates}
+				Completed days: {(habit.completedDates).length}
 			</p>
 			<div
 				className='flex items-center'
 			>
 				<button
 					className={`mr-3 border px-2 cursor-pointer duration-200 
-					${theme === 'light' ? 'hover:bg-green-200' : 'hover:opacity-70'}	`}
-					onClick={() => setCompleted(prev => !prev)}
+					${theme === 'light' ? 'hover:bg-green-200' : 'hover:bg-green-600'}
+					${completed && theme === 'light' ? 'bg-green-200' : ''}
+					${completed && theme === 'dark' ? 'bg-green-600' : ''}
+					`}
+					onClick={completedToday}
 				>
 					Completed today
 				</button>
 
 				<IoMdDoneAll 
-					className={`text-2xl ease duration-200 ${theme === 'light' ? 'text-green-700' : 'text-green-400'}
+					className={`text-2xl ease duration-200 ${theme === 'light' ? 'text-green-600' : 'text-green-400'}
 					${completed ? 'opacity-100' : 'opacity-0'}`}
 				/>
 			</div>

@@ -5,14 +5,14 @@ import type { HabitType } from './types/habitType'
 
 const initialHabits = [
   {
-  	id: '1',
+  	id: 1,
     title: 'physical training',
     category: 'health',
     completedDates: [],
     createdAt: Date.now().toLocaleString()
   },
   {
-  	id: '2',
+  	id: 2,
     title: 'cold shower',
     category: 'health',
     completedDates: [],
@@ -31,6 +31,12 @@ export default function App() {
     document.body.setAttribute("data-theme", theme)
   }, [theme])
 
+  const countCompletedDays = (id: number) => {
+    setHabits(prev => prev.map(habit => 
+      habit.id === id ? {...habit, completedDates: [...habit.completedDates, Date.now().toLocaleString()]} : habit
+    ))
+  }
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -38,6 +44,7 @@ export default function App() {
       </h1>
       <HabitsList 
         habitsList={habits}
+        countCompletedDays={countCompletedDays}
       />
       <button
         className={`border mt-5 px-3 cursor-pointer ${theme === "light" ? "hover:bg-blue-200" : "hover:bg-blue-700"}`}

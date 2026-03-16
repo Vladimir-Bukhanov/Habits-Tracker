@@ -3,15 +3,17 @@ import HabitItem from './HabitItem'
 
 interface IHabitsList {
 	habitsList: HabitType[]
+	countCompletedDays: (id: number) => void
 }
 
-export default function HabitsList({habitsList}: IHabitsList) {
+export default function HabitsList({habitsList, countCompletedDays}: IHabitsList) {
 	return (
 		<div>
 			{habitsList.map(habit => (
 				<HabitItem
 					key={habit.id} 
 					habit={habit}
+					countCompletedDays={countCompletedDays}
 				/>
 			))}
 		</div>
