@@ -3,9 +3,11 @@
 body[data-theme="light"] {
   background: #fff;
   color: #111;
+  font-family: "Open Sans", "sans-serif";
 }
 
 body[data-theme="dark"] {
   background: #111;
   color: #fff;
+  font-family: "Open Sans", "sans-serif";
 }

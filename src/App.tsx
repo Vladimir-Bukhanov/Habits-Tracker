@@ -32,8 +32,8 @@ export default function App() {
   }, [theme])
 
   return (
-    <>
-      <h1>
+    <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
+      <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
         Habits Tracker
       </h1>
       <HabitsList 
@@ -45,7 +45,7 @@ export default function App() {
       >
         Change Theme
       </button>
-    </>
+    </div>
   )
 }
 
