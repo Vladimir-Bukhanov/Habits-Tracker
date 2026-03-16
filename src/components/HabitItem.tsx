@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { IoMdDoneAll } from "react-icons/io"
 import { ThemeContext } from '../context/ThemeContext'
 import type { HabitType } from '../types/habitType'
@@ -15,10 +15,31 @@ export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 
 	 const [completed, setCompleted] = useState<boolean>(false)
 
+	  useEffect(() => {
+    	const checkDate = () => {
+      const today = new Date().toLocaleDateString()
+      const lastDate = localStorage.getItem('lastDate')
+
+      if (lastDate !== today) {
+        setCompleted(false)
+				localStorage.setItem('lastDate', today)
+      }
+    }
+
+		checkDate()
+
+		const intervalId = setInterval(checkDate, 3600000)
+
+		return () => clearInterval(intervalId)
+
+  }, [])
+
 	 const completedToday = () => {
 
-			setCompleted(true)
-			countCompletedDays(habit.id)
+			if (!completed) {
+				setCompleted(true)
+				countCompletedDays(habit.id)
+			}
 	 }
 
 	return (

@@ -9,14 +9,14 @@ const initialHabits = [
     title: 'physical training',
     category: 'health',
     completedDates: [],
-    createdAt: Date.now().toLocaleString()
+    createdAt: new Date().toLocaleDateString()
   },
   {
   	id: 2,
     title: 'cold shower',
     category: 'health',
     completedDates: [],
-    createdAt: Date.now().toLocaleString()
+    createdAt: new Date().toLocaleDateString()
   }
 ]
 
@@ -33,7 +33,7 @@ export default function App() {
 
   const countCompletedDays = (id: number) => {
     setHabits(prev => prev.map(habit => 
-      habit.id === id ? {...habit, completedDates: [...habit.completedDates, Date.now().toLocaleString()]} : habit
+      habit.id === id ? {...habit, completedDates: [...habit.completedDates, new Date().toLocaleDateString()]} : habit
     ))
   }
 
