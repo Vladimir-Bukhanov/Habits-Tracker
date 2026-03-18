@@ -22,7 +22,17 @@ const initialHabits = [
 
 export default function App() {
 
-  const [habits, setHabits] = useState<HabitType[]>(initialHabits)
+  const [habits, setHabits] = useState<HabitType[]>(() => {
+
+    const saved = localStorage.getItem('habits')
+    if (saved) {
+      const parse = JSON.parse(saved)
+      return parse.length > 0 ? parse : initialHabits
+    }
+
+    return initialHabits
+    
+  })
 
   const { theme, toggleTheme } = useContext(ThemeContext)
 
@@ -30,6 +40,10 @@ export default function App() {
   useEffect(() => {
     document.body.setAttribute("data-theme", theme)
   }, [theme])
+
+  useEffect(() => {
+    localStorage.setItem('habits', JSON.stringify(habits))
+  }, [habits])
 
   const countCompletedDays = (id: number) => {
     setHabits(prev => prev.map(habit => 

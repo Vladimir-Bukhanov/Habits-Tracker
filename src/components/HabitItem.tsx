@@ -13,17 +13,34 @@ export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 
 	 const {theme} = useContext(ThemeContext)
 
-	 const [completed, setCompleted] = useState<boolean>(false)
+	 const [completed, setCompleted] = useState<boolean>(() => {
+
+		const savedCompleted = localStorage.getItem("completedToday")
+
+		if (savedCompleted) {
+			const parseCompleted = JSON.parse(savedCompleted)
+			return parseCompleted
+		}
+
+		return false
+
+	 })
+
+	 useEffect(() => {
+		localStorage.setItem('completedToday', JSON.stringify(completed))
+	 }, [completed])
 
 	  useEffect(() => {
     	const checkDate = () => {
       const today = new Date().toLocaleDateString()
-      const lastDate = localStorage.getItem('lastDate')
+      const lastDate = localStorage.getItem('lastDate') || habit.createdAt
 
       if (lastDate !== today) {
         setCompleted(false)
 				localStorage.setItem('lastDate', today)
       }
+
+			console.log('today: ' + today + '   ' + 'lastDate: ' + lastDate)
     }
 
 		checkDate()
