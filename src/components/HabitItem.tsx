@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { IoMdDoneAll } from "react-icons/io"
 import { ThemeContext } from '../context/ThemeContext'
 import type { HabitType } from '../types/habitType'
@@ -13,34 +13,16 @@ export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 
 	 const {theme} = useContext(ThemeContext)
 
-	 const [completed, setCompleted] = useState<boolean>(() => {
 
-		const savedCompleted = localStorage.getItem("completedToday")
-
-		if (savedCompleted) {
-			const parseCompleted = JSON.parse(savedCompleted)
-			return parseCompleted
-		}
-
-		return false
-
-	 })
-
-	 useEffect(() => {
-		localStorage.setItem('completedToday', JSON.stringify(completed))
-	 }, [completed])
 
 	  useEffect(() => {
     	const checkDate = () => {
       const today = new Date().toLocaleDateString()
-      const lastDate = localStorage.getItem('lastDate') || habit.createdAt
+			const lastDate = habit.completedDates[habit.completedDates.length - 1]
 
       if (lastDate !== today) {
-        setCompleted(false)
 				localStorage.setItem('lastDate', today)
       }
-
-			console.log('today: ' + today + '   ' + 'lastDate: ' + lastDate)
     }
 
 		checkDate()
@@ -53,8 +35,11 @@ export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 
 	 const completedToday = () => {
 
-			if (!completed) {
-				setCompleted(true)
+			if (
+				habit.completedDates[habit.completedDates.length-1] !==
+				new Date().toLocaleDateString() ||
+				habit.completedDates.length === 0
+			) {
 				countCompletedDays(habit.id)
 			}
 	 }
@@ -82,8 +67,10 @@ export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 				<button
 					className={`mr-3 border px-2 cursor-pointer duration-200 
 					${theme === 'light' ? 'hover:bg-green-200' : 'hover:bg-green-600'}
-					${completed && theme === 'light' ? 'bg-green-200' : ''}
-					${completed && theme === 'dark' ? 'bg-green-600' : ''}
+					${habit.completedDates[habit.completedDates.length-1] === 
+					new Date().toLocaleDateString() && theme === 'light' ? 'bg-green-200' : ''}
+					${habit.completedDates[habit.completedDates.length-1] === 
+					new Date().toLocaleDateString() && theme === 'dark' ? 'bg-green-600' : ''}
 					`}
 					onClick={completedToday}
 				>
@@ -92,7 +79,8 @@ export default function HabitItem({habit, countCompletedDays}: IHabitItem) {
 
 				<IoMdDoneAll 
 					className={`text-2xl ease duration-200 ${theme === 'light' ? 'text-green-600' : 'text-green-400'}
-					${completed ? 'opacity-100' : 'opacity-0'}`}
+					${habit.completedDates[habit.completedDates.length-1] === 
+					new Date().toLocaleDateString() ? 'opacity-100' : 'opacity-0'}`}
 				/>
 			</div>
 		</div>

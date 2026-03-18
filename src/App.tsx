@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import HabitForm, { type IHabitFields } from './components/HabitForm'
 import HabitsList from './components/HabitsList'
 import { ThemeContext } from './context/ThemeContext'
 import type { HabitType } from './types/habitType'
@@ -51,6 +52,21 @@ export default function App() {
     ))
   }
 
+  const addHabit = (formFields: IHabitFields) => {
+    
+    const newHabit: HabitType = {
+      id: Date.now(),
+      title: formFields.title,
+      description: formFields.description,
+      category: formFields.category,
+      completedDates: [],
+      createdAt: new Date().toLocaleDateString()
+    }
+
+    setHabits(prev => [...prev, newHabit])
+
+  }
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -59,6 +75,9 @@ export default function App() {
       <HabitsList 
         habitsList={habits}
         countCompletedDays={countCompletedDays}
+      />
+      <HabitForm 
+        addHabit={addHabit}
       />
       <button
         className={`border mt-5 px-3 cursor-pointer ${theme === "light" ? "hover:bg-blue-200" : "hover:bg-blue-700"}`}

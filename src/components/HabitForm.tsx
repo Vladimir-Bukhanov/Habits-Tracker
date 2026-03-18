@@ -4,7 +4,7 @@ interface IHabitForm {
 	addHabit: (newHabit: IHabitFields) => void
 }
 
-interface IHabitFields {
+export interface IHabitFields {
 	title: string
 	category: string
 	description: string
@@ -27,9 +27,8 @@ export default function HabitForm({addHabit}: IHabitForm) {
 		e.preventDefault()
 
 		if (
-			habitFields.title.trim() === "" &&
-			habitFields.title.trim() === "" &&
-			habitFields.title.trim() === "" 
+			habitFields.title.trim() === "" ||
+			habitFields.category.trim() === ""  
 		) {
 			setError('Fill in all fields...')
 			return
@@ -56,18 +55,21 @@ export default function HabitForm({addHabit}: IHabitForm) {
 				<input 
 					type="text"
 					name='title'
+					placeholder='Enter title of habit'
 					value={habitFields.title}
 					onChange={handleChange} 
 				/>
 				<input 
 					type="text"
 					name='category'
+					placeholder='Enter category of habit'
 					value={habitFields.category}
 					onChange={handleChange} 
 				/>
 				<input 
 					type="text"
 					name='description'
+					placeholder='Enter description of habit'
 					value={habitFields.description}
 					onChange={handleChange} 
 				/>
