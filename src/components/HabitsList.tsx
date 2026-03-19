@@ -3,17 +3,17 @@ import HabitItem from './HabitItem'
 
 interface IHabitsList {
 	habitsList: HabitType[]
-	countCompletedDays: (id: number) => void
+	handleToggleHabit: (id: number) => void
 }
 
-export default function HabitsList({habitsList, countCompletedDays}: IHabitsList) {
+export default function HabitsList({habitsList, handleToggleHabit}: IHabitsList) {
 	return (
 		<div>
 			{habitsList.map(habit => (
 				<HabitItem
 					key={habit.id} 
 					habit={habit}
-					countCompletedDays={countCompletedDays}
+					handleToggleHabit={handleToggleHabit}
 				/>
 			))}
 		</div>

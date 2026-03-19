@@ -46,12 +46,6 @@ export default function App() {
     localStorage.setItem('habits', JSON.stringify(habits))
   }, [habits])
 
-  const countCompletedDays = (id: number) => {
-    setHabits(prev => prev.map(habit => 
-      habit.id === id ? {...habit, completedDates: [...habit.completedDates, new Date().toLocaleDateString()]} : habit
-    ))
-  }
-
   const addHabit = (formFields: IHabitFields) => {
     
     const newHabit: HabitType = {
@@ -67,6 +61,23 @@ export default function App() {
 
   }
 
+  const handleToggleHabit = (id: number) => {
+
+    const today = new Date().toLocaleDateString()
+
+    setHabits(prev => prev.map(habit => {
+      if (habit.id !== id) return habit
+      if (habit.completedDates.includes(today)) {
+        return habit
+      }
+
+      return {
+        ...habit,
+        completedDates: [...habit.completedDates, today]
+      }
+    }))
+  }
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -74,7 +85,7 @@ export default function App() {
       </h1>
       <HabitsList 
         habitsList={habits}
-        countCompletedDays={countCompletedDays}
+        handleToggleHabit={handleToggleHabit}
       />
       <HabitForm 
         addHabit={addHabit}
