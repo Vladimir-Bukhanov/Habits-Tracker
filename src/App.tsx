@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import HabitForm, { type IHabitFields } from './components/HabitForm'
 import HabitsList from './components/HabitsList'
+import Modal from './components/Modal'
 import { ThemeContext } from './context/ThemeContext'
 import type { HabitType } from './types/habitType'
 
@@ -87,9 +88,11 @@ export default function App() {
         habitsList={habits}
         handleToggleHabit={handleToggleHabit}
       />
-      <HabitForm 
-        addHabit={addHabit}
-      />
+      <Modal title='Create new habit'>
+        <HabitForm 
+          addHabit={addHabit}
+        />
+      </Modal>
       <button
         className={`border mt-5 px-3 cursor-pointer ${theme === "light" ? "hover:bg-blue-200" : "hover:bg-blue-700"}`}
         onClick={toggleTheme}
