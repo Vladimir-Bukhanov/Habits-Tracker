@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import HabitForm, { type IHabitFields } from './components/HabitForm'
 import HabitsList from './components/HabitsList'
 import Modal from './components/Modal'
+import { ModalContext } from './context/ModalContext'
 import { ThemeContext } from './context/ThemeContext'
 import type { HabitType } from './types/habitType'
 
@@ -37,6 +38,8 @@ export default function App() {
   })
 
   const { theme, toggleTheme } = useContext(ThemeContext)
+
+  const { modal, onClose, open } = useContext(ModalContext)
 
 
   useEffect(() => {
@@ -84,21 +87,30 @@ export default function App() {
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
         Habits Tracker
       </h1>
-      <HabitsList 
-        habitsList={habits}
-        handleToggleHabit={handleToggleHabit}
-      />
-      <Modal title='Create new habit'>
-        <HabitForm 
-          addHabit={addHabit}
-        />
-      </Modal>
       <button
-        className={`border mt-5 px-3 cursor-pointer ${theme === "light" ? "hover:bg-blue-200" : "hover:bg-blue-700"}`}
+        className={`border mb-3 duration-200 block px-3 cursor-pointer ${theme === "light" ? "hover:bg-blue-200" : "hover:bg-blue-700"}`}
         onClick={toggleTheme}
       >
         Change Theme
       </button>
+      <button 
+        className={`border px-2 mb-3 cursor-pointer ${theme === "light" ? 'hover:bg-amber-200' : 'hover:bg-amber-700'} hover:bg-amber-200 duration-200`}
+        onClick={open}
+      
+      >
+        Add habit
+      </button>
+      <HabitsList 
+        habitsList={habits}
+        handleToggleHabit={handleToggleHabit}
+      />
+      {modal && 
+        <Modal title='Create new habit'>
+        <HabitForm 
+          addHabit={addHabit}
+        />
+      </Modal>
+      }
     </div>
   )
 }

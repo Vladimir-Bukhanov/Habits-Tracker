@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { ModalContext } from '../context/ModalContext'
 
 interface IHabitForm {
 	addHabit: (newHabit: IHabitFields) => void
@@ -22,13 +23,16 @@ export default function HabitForm({addHabit}: IHabitForm) {
 
 	const [error, setError] = useState<string>('')
 
+	const { onClose } = useContext(ModalContext)
+
 	const handleSubmit = (e: React.FormEvent) => {
 
 		e.preventDefault()
 
 		if (
 			habitFields.title.trim() === "" ||
-			habitFields.category.trim() === ""  
+			habitFields.category.trim() === "" || 
+			habitFields.description.trim() === ""  
 		) {
 			setError('Fill in all fields...')
 			return
@@ -36,7 +40,7 @@ export default function HabitForm({addHabit}: IHabitForm) {
 
 		addHabit(habitFields)
 		setHabitFields(initialState)
-
+		onClose()
 	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
@@ -79,13 +83,13 @@ export default function HabitForm({addHabit}: IHabitForm) {
 			</div>
 
 			<button 
-				className='border px-2 cursor-pointer hover:bg-gray-200 duration-200'
+				className='border px-2 cursor-pointer hover:bg-gray-200 duration-200 mb-3'
 				type='submit'
 			>
 				Add Habit
 			</button>
 
-			{ error && <p>{error}</p> }
+			{ error && <p className='text-red-600'>{error}</p> }
 			
 		</form>
 	)
