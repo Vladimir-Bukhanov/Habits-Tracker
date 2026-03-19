@@ -55,6 +55,7 @@ export default function HabitForm({addHabit}: IHabitForm) {
 				<input 
 					type="text"
 					name='title'
+					className='outline-0 block w-full text-black border mb-3 px-2'
 					placeholder='Enter title of habit'
 					value={habitFields.title}
 					onChange={handleChange} 
@@ -62,6 +63,7 @@ export default function HabitForm({addHabit}: IHabitForm) {
 				<input 
 					type="text"
 					name='category'
+					className='outline-0 block w-full text-black border mb-3 px-2'
 					placeholder='Enter category of habit'
 					value={habitFields.category}
 					onChange={handleChange} 
@@ -69,13 +71,17 @@ export default function HabitForm({addHabit}: IHabitForm) {
 				<input 
 					type="text"
 					name='description'
+					className='outline-0 block w-full text-black border mb-3 px-2'
 					placeholder='Enter description of habit'
 					value={habitFields.description}
 					onChange={handleChange} 
 				/>
 			</div>
 
-			<button type='submit'>
+			<button 
+				className='border px-2 cursor-pointer hover:bg-gray-200 duration-200'
+				type='submit'
+			>
 				Add Habit
 			</button>
 
