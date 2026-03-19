@@ -8,9 +8,10 @@ import { isCompletedToday } from '../utils/isCompletedToday'
 interface IHabitItem {
 	habit: HabitType
 	handleToggleHabit: (id: number) => void
+	onDelete: (id: number) => void
 }
 
-export default function HabitItem({habit, handleToggleHabit}: IHabitItem) {
+export default function HabitItem({habit, handleToggleHabit, onDelete}: IHabitItem) {
 
 	 const {theme} = useContext(ThemeContext)
 
@@ -31,6 +32,12 @@ export default function HabitItem({habit, handleToggleHabit}: IHabitItem) {
 			>
 				Completed days: {habit.completedDates.length}
 			</p>
+			<button
+			className='mb-3 border px-2 hover:bg-red-500 duration-200 cursor-pointer'
+				onClick={() => onDelete(habit.id)}
+			>
+				Delete
+			</button>
 			<div
 				className='flex items-center'
 			>

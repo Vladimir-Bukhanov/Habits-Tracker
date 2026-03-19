@@ -4,9 +4,10 @@ import HabitItem from './HabitItem'
 interface IHabitsList {
 	habitsList: HabitType[]
 	handleToggleHabit: (id: number) => void
+	onDelete: (id:number) => void
 }
 
-export default function HabitsList({habitsList, handleToggleHabit}: IHabitsList) {
+export default function HabitsList({habitsList, handleToggleHabit, onDelete}: IHabitsList) {
 	return (
 		<div>
 			{habitsList.map(habit => (
@@ -14,6 +15,7 @@ export default function HabitsList({habitsList, handleToggleHabit}: IHabitsList)
 					key={habit.id} 
 					habit={habit}
 					handleToggleHabit={handleToggleHabit}
+					onDelete={onDelete}
 				/>
 			))}
 		</div>

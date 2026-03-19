@@ -82,6 +82,12 @@ export default function App() {
     }))
   }
 
+  const onDelete = (id: number) => {
+    setHabits(prev => prev.filter(habit => 
+      habit.id !== id
+    ))
+  }
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -103,6 +109,7 @@ export default function App() {
       <HabitsList 
         habitsList={habits}
         handleToggleHabit={handleToggleHabit}
+        onDelete={onDelete}
       />
       {modal && 
         <Modal title='Create new habit'>
