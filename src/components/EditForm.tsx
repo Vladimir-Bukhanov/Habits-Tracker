@@ -9,11 +9,11 @@ interface IEditForm {
 
 export default function EditForm({habit, closeEditForm, onSave}: IEditForm) {
 
-	const [newTitle, setNewTitle] = useState<string>(habit.title)
+	const [newTitle, setNewTitle] = useState<string>('')
 
-	const [newCategory, setNewCategory] = useState<string>(habit.category)
+	const [newCategory, setNewCategory] = useState<string>('')
 
-	const [newDescription, setNewDescription] = useState<string>(habit.description ? habit.description : '')
+	const [newDescription, setNewDescription] = useState<string>('')
 
 	const handleSave = () => {
 
@@ -26,8 +26,9 @@ export default function EditForm({habit, closeEditForm, onSave}: IEditForm) {
 	}
 
 	return (
-		<div>
-			<div>
+		<div className='fixed top-0 left-0 right-0 bottom-0 bg-black/60'>
+			<div className='w-[90%] max-w-150 min-w-90 p-5 bg-white text-black absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 '>
+				<h2 className='text-center text-xl mb-5'>Edit Form</h2>
 				<input 
 					type="text"
 					className='outline-0 block w-full text-black border mb-3 px-2'
@@ -50,20 +51,20 @@ export default function EditForm({habit, closeEditForm, onSave}: IEditForm) {
 					onChange={(e) => setNewDescription(e.target.value)} 
 				/>
 
-			</div>
+				<button 
+					className='border px-2 cursor-pointer hover:bg-green-200 duration-200 mr-3'
+					onClick={handleSave}
+				>
+					Save
+				</button>
+				<button 
+					className='border px-2 cursor-pointer hover:bg-gray-200 duration-200'
+					onClick={closeEditForm}
+				>
+					Cancel
+				</button>
 
-			<button 
-				className='border px-2 cursor-pointer hover:bg-green-200 duration-200 mr-3'
-				onClick={handleSave}
-			>
-				Save
-			</button>
-			<button 
-				className='border px-2 cursor-pointer hover:bg-gray-200 duration-200'
-				onClick={closeEditForm}
-			>
-				Cancel
-			</button>
+			</div>
 		</div>
 	)
 }
