@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import EditForm from './components/EditForm'
 import HabitForm, { type IHabitFields } from './components/HabitForm'
 import HabitsList from './components/HabitsList'
 import Modal from './components/Modal'
@@ -36,6 +37,8 @@ export default function App() {
     return initialHabits
     
   })
+
+  const [isEditing, setIsEditing] = useState<HabitType | null>(null)
 
   const { theme, toggleTheme } = useContext(ThemeContext)
 
@@ -88,6 +91,15 @@ export default function App() {
     ))
   }
 
+  const handleEditSave = (updatedHabit: HabitType) => {
+    setHabits(prev => prev.map(habit => (
+      habit.id === updatedHabit.id ? 
+      updatedHabit : habit
+    )))
+
+    setIsEditing(null)
+  }
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -110,6 +122,7 @@ export default function App() {
         habitsList={habits}
         handleToggleHabit={handleToggleHabit}
         onDelete={onDelete}
+        onEdit={setIsEditing}
       />
       {modal && 
         <Modal title='Create new habit'>
@@ -117,6 +130,14 @@ export default function App() {
           addHabit={addHabit}
         />
       </Modal>
+      }
+
+      {isEditing &&
+        <EditForm 
+          habit={isEditing}
+          closeEditForm={() => setIsEditing(null)}
+          onSave={handleEditSave}
+        />
       }
     </div>
   )
