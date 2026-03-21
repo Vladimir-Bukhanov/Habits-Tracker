@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import EditForm from './components/EditForm'
+import FilteredButtons from './components/FilteredButtons'
 import HabitForm, { type IHabitFields } from './components/HabitForm'
 import HabitsList from './components/HabitsList'
 import Modal from './components/Modal'
 import { ModalContext } from './context/ModalContext'
 import { ThemeContext } from './context/ThemeContext'
+import type { FilterBtnType } from './types/filterBtnType'
 import type { HabitType } from './types/habitType'
 
 const initialHabits = [
@@ -39,6 +41,8 @@ export default function App() {
   })
 
   const [isEditing, setIsEditing] = useState<HabitType | null>(null)
+
+  const [filterBtn, setFilterBtn] = useState<FilterBtnType>("All")
 
   const { theme, toggleTheme } = useContext(ThemeContext)
 
@@ -100,6 +104,18 @@ export default function App() {
     setIsEditing(null)
   }
 
+  const filteredHabits = habits.filter(habit => {
+
+    if (filterBtn === "Completed today") {
+      return habit.completedDates.includes(new Date().toLocaleDateString())
+    } else if ( filterBtn === "Not completed today") {
+      return !habit.completedDates.includes(new Date().toLocaleDateString())
+    }
+
+    return true
+
+  })
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -111,6 +127,10 @@ export default function App() {
       >
         Change Theme
       </button>
+      <FilteredButtons 
+        current={filterBtn}
+        onFilter={setFilterBtn}
+      />
       <button 
         className={`border px-2 mb-3 cursor-pointer ${theme === "light" ? 'hover:bg-amber-200' : 'hover:bg-amber-700'} hover:bg-amber-200 duration-200`}
         onClick={open}
@@ -119,7 +139,7 @@ export default function App() {
         Add habit
       </button>
       <HabitsList 
-        habitsList={habits}
+        habitsList={filteredHabits}
         handleToggleHabit={handleToggleHabit}
         onDelete={onDelete}
         onEdit={setIsEditing}

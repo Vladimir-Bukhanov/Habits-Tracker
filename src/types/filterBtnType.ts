@@ -1,0 +1,1 @@
+export type FilterBtnType = "All" | "Completed today" | "Not completed today" 
