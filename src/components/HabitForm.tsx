@@ -30,11 +30,21 @@ export default function HabitForm({addHabit}: IHabitForm) {
 		e.preventDefault()
 
 		if (
-			habitFields.title.trim() === "" ||
-			habitFields.category.trim() === "" || 
-			habitFields.description.trim() === ""  
+			habitFields.title.trim() === ""  
 		) {
-			setError('Fill in all fields...')
+			setError('Enter title...')
+			return
+		}
+
+		if (habitFields.category.trim() === "") {
+			setError('Enter category...')
+			return
+		}
+
+		if (habitFields.category.trim() === "" ||
+			habitFields.title.trim() === ""
+		) {
+			setError('Enter category and title...')
 			return
 		}
 

@@ -42,7 +42,7 @@ export default function App() {
 
   const { theme, toggleTheme } = useContext(ThemeContext)
 
-  const { modal, onClose, open } = useContext(ModalContext)
+  const { modal, open } = useContext(ModalContext)
 
 
   useEffect(() => {
@@ -142,4 +142,3 @@ export default function App() {
     </div>
   )
 }
-

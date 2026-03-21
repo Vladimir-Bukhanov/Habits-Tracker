@@ -33,6 +33,11 @@ export default function HabitItem({habit, handleToggleHabit, onDelete, onEdit}: 
 			>
 				Completed days: {habit.completedDates.length}
 			</p>
+			{habit.description && 
+				<p className='mb-3'>
+					Description: {habit.description}
+				</p>
+			}
 			<button
 			className='mb-3 border block px-2 hover:bg-red-500 duration-200 cursor-pointer'
 				onClick={() => onDelete(habit.id)}

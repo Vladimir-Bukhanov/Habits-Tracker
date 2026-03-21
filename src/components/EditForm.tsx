@@ -43,13 +43,15 @@ export default function EditForm({habit, closeEditForm, onSave}: IEditForm) {
 					value={newCategory}
 					onChange={(e) => setNewCategory(e.target.value)} 
 				/>
-				<input 
-					type="text"
-					className='outline-0 block w-full text-black border mb-3 px-2'
-					placeholder='Enter new description'
-					value={newDescription}
-					onChange={(e) => setNewDescription(e.target.value)} 
+				{habit.description && 
+					<input 
+						type="text"
+						className='outline-0 block w-full text-black border mb-3 px-2'
+						placeholder='Enter new description'
+						value={newDescription}
+						onChange={(e) => setNewDescription(e.target.value)} 
 				/>
+				}
 
 				<button 
 					className='border px-2 cursor-pointer hover:bg-green-200 duration-200 mr-3'
