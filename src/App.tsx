@@ -42,7 +42,9 @@ export default function App() {
 
   const [isEditing, setIsEditing] = useState<HabitType | null>(null)
 
-  const [filterBtn, setFilterBtn] = useState<FilterBtnType>("All")
+  const [filterBtn, setFilterBtn] = useState<FilterBtnType>(() => {
+    return (localStorage.getItem('filterBtn') as FilterBtnType || "All")
+  })
 
   const { theme, toggleTheme } = useContext(ThemeContext)
 
@@ -56,6 +58,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('habits', JSON.stringify(habits))
   }, [habits])
+
+  useEffect(() => {
+    localStorage.setItem('filterBtn', filterBtn)
+  }, [filterBtn])
 
   const addHabit = (formFields: IHabitFields) => {
     
