@@ -8,6 +8,7 @@ import { ModalContext } from './context/ModalContext'
 import { ThemeContext } from './context/ThemeContext'
 import type { FilterBtnType } from './types/filterBtnType'
 import type { HabitType } from './types/habitType'
+import { habitsStatistic } from './utils/habitsStatistic'
 
 const initialHabits = [
   {
@@ -49,6 +50,8 @@ export default function App() {
   })
 
   const { theme, toggleTheme } = useContext(ThemeContext)
+
+  const {totalHabits, completedToday, rate} = habitsStatistic(habits)
 
   const { modal, open } = useContext(ModalContext)
 
@@ -158,6 +161,11 @@ export default function App() {
         value={search}
         onChange={(e) => setSearch(e.target.value)} 
       />
+      <div className='mb-3'>
+        <p>Total habits: {totalHabits}</p>
+        <p>Completed today: {completedToday}</p>
+        <p>Completion rate: {rate}%</p>
+      </div>
       <HabitsList 
         habitsList={searchedHabit}
         handleToggleHabit={handleToggleHabit}
