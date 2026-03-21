@@ -42,6 +42,8 @@ export default function App() {
 
   const [isEditing, setIsEditing] = useState<HabitType | null>(null)
 
+  const [search, setSearch] = useState<string>('')
+
   const [filterBtn, setFilterBtn] = useState<FilterBtnType>(() => {
     return (localStorage.getItem('filterBtn') as FilterBtnType || "All")
   })
@@ -122,6 +124,11 @@ export default function App() {
 
   })
 
+  const searchedHabit = filteredHabits.filter(habit => habit.title.toLowerCase().includes(search))     
+
+
+  
+
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
@@ -144,8 +151,15 @@ export default function App() {
       >
         Add habit
       </button>
+      <input 
+        type="text"
+        className={`mb-3 outline-0 border px-2 block w-1/2 min-w-60 ${theme === "light" ? "placeholder:text-gray-500" : "placeholder:text-gray-400"}`}
+        placeholder='Search by title of habit...'
+        value={search}
+        onChange={(e) => setSearch(e.target.value)} 
+      />
       <HabitsList 
-        habitsList={filteredHabits}
+        habitsList={searchedHabit}
         handleToggleHabit={handleToggleHabit}
         onDelete={onDelete}
         onEdit={setIsEditing}
