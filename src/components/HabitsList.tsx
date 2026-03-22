@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion'
 import type { HabitType } from '../types/habitType'
 import HabitItem from './HabitItem'
 
@@ -10,16 +11,27 @@ interface IHabitsList {
 
 export default function HabitsList({habitsList, handleToggleHabit, onDelete, onEdit}: IHabitsList) {
 	return (
+		<AnimatePresence mode='popLayout'>
 		<div>
 			{habitsList.map(habit => (
-				<HabitItem
-					key={habit.id} 
-					habit={habit}
-					handleToggleHabit={handleToggleHabit}
-					onDelete={onDelete}
-					onEdit={onEdit}
-				/>
+				<motion.li
+					key={habit.id}
+					className='list-none'
+					layout
+					initial={{ opacity:0, y:-10 }}
+					animate={{ opacity:1, y:0 }}
+					exit={{ opacity:0, y:10 }}
+					transition={{ duration:0.2 }}
+				>
+					<HabitItem
+						habit={habit}
+						handleToggleHabit={handleToggleHabit}
+						onDelete={onDelete}
+						onEdit={onEdit}
+					/>
+				</motion.li>
 			))}
 		</div>
+		</AnimatePresence>
 	)
 }

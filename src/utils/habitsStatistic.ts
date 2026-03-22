@@ -8,7 +8,7 @@ export const habitsStatistic = (habits: HabitType[]) => {
 
 	const completedToday = habits.filter(habit => habit.completedDates.includes(today)).length
 
-	const rate = (completedToday / totalHabits) * 100
+	const rate = ((completedToday / totalHabits) * 100).toFixed(1)
 
 	return {totalHabits, completedToday, rate}
 
