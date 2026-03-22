@@ -39,7 +39,7 @@ export default function HabitItem({habit, handleToggleHabit, onDelete, onEdit}: 
 				</p>
 			}
 			<button
-			className='mb-3 border block px-2 hover:bg-red-500 duration-200 cursor-pointer'
+				className='mb-3 border block px-2 hover:bg-red-500 duration-200 cursor-pointer'
 				onClick={() => onDelete(habit.id)}
 			>
 				Delete

@@ -9,23 +9,8 @@ import { ThemeContext } from './context/ThemeContext'
 import type { FilterBtnType } from './types/filterBtnType'
 import type { HabitType } from './types/habitType'
 import { habitsStatistic } from './utils/habitsStatistic'
+import { isCompletedToday } from './utils/isCompletedToday'
 
-const initialHabits = [
-  {
-  	id: 1,
-    title: 'physical training',
-    category: 'health',
-    completedDates: [],
-    createdAt: new Date().toLocaleDateString()
-  },
-  {
-  	id: 2,
-    title: 'cold shower',
-    category: 'health',
-    completedDates: [],
-    createdAt: new Date().toLocaleDateString()
-  }
-]
 
 export default function App() {
 
@@ -33,11 +18,10 @@ export default function App() {
 
     const saved = localStorage.getItem('habits')
     if (saved) {
-      const parse = JSON.parse(saved)
-      return parse.length > 0 ? parse : initialHabits
+      return JSON.parse(saved)
     }
 
-    return initialHabits
+    return [] as HabitType[]
     
   })
 
@@ -89,7 +73,7 @@ export default function App() {
 
     setHabits(prev => prev.map(habit => {
       if (habit.id !== id) return habit
-      if (habit.completedDates.includes(today)) {
+      if (isCompletedToday(habit)) {
         return habit
       }
 
@@ -123,9 +107,9 @@ export default function App() {
   const filteredHabits = sortedHabits.filter(habit => {
 
     if (filterBtn === "Completed today") {
-      return habit.completedDates.includes(new Date().toLocaleDateString())
+      return isCompletedToday(habit)
     } else if ( filterBtn === "Not completed today") {
-      return !habit.completedDates.includes(new Date().toLocaleDateString())
+      return !isCompletedToday(habit)
     }
 
     return true

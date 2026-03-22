@@ -41,7 +41,7 @@ export default function HabitForm({addHabit}: IHabitForm) {
 			return
 		}
 
-		if (habitFields.category.trim() === "" ||
+		if (habitFields.category.trim() === "" &&
 			habitFields.title.trim() === ""
 		) {
 			setError('Enter category and title...')
