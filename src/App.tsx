@@ -115,7 +115,12 @@ export default function App() {
     setIsEditing(null)
   }
 
-  const filteredHabits = habits.filter(habit => {
+  const sortedHabits = habits.sort((a, b) => (
+    b.id - a.id
+  ))
+
+
+  const filteredHabits = sortedHabits.filter(habit => {
 
     if (filterBtn === "Completed today") {
       return habit.completedDates.includes(new Date().toLocaleDateString())
@@ -127,11 +132,8 @@ export default function App() {
 
   })
 
-  const searchedHabit = filteredHabits.filter(habit => habit.title.toLowerCase().includes(search))     
-
-
+  const searchedHabit = filteredHabits.filter(habit => habit.title.toLowerCase().includes(search))
   
-
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>
       <h1 className='text-center mt-15 mb-5 text-xl font-bold'>
