@@ -147,11 +147,13 @@ export default function App() {
         value={search}
         onChange={(e) => setSearch(e.target.value)} 
       />
-      <div className='mb-3'>
-        <p>Total habits: {totalHabits}</p>
-        <p>Completed today: {completedToday}</p>
-        <p>Completion rate: {rate}%</p>
-      </div>
+      {habits.length > 0 && 
+        <div className='mb-3'>
+          <p>Total habits: {totalHabits}</p>
+          <p>Completed today: {completedToday}</p>
+          <p>Completion rate: {rate}%</p>
+        </div>
+      }
       <HabitsList 
         habitsList={searchedHabit}
         handleToggleHabit={handleToggleHabit}
