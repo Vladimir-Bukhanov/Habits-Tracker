@@ -116,7 +116,7 @@ export default function App() {
 
   })
 
-  const searchedHabit = filteredHabits.filter(habit => habit.title.toLowerCase().includes(search))
+  const searchedHabit = filteredHabits.filter(habit => habit.title.toLowerCase().includes(search.toLocaleLowerCase()))
   
   return (
     <div className='mx-auto mb-5 w-[90%] max-w-200 min-w-90'>

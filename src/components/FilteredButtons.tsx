@@ -12,11 +12,11 @@ export default function FilteredButtons({current, onFilter}: IFilterBtn) {
 	const {theme} = useContext(ThemeContext)
 
 	return (
-		<div className='mb-3'>
+		<div>
 			{(["All", "Completed today", "Not completed today"] as FilterBtnType[]).map(btn => (
 				<button
 					key={btn}
-					className={`px-2 mr-3 border 	cursor-pointer ease duration-200 
+					className={`px-2 mr-3 mb-3 border 	cursor-pointer ease duration-200 
 					${theme === "light" && current === btn ? "bg-blue-200" : ""}
 					${theme === "dark" && current === btn ? "bg-blue-700" : ""}
 					`}
